@@ -1,0 +1,14 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = "if AUT.card_type == 'Enhanced' then card_type = localize{type = 'name_text', key = card.config.center.key, set = 'Enhanced'} end"
+position = "before"
+payload = """
+if AUT.card_type == 'Joker' and card.config.center.rarity == 'Mythical' then card_type = ({['Mythical'] = 'Mythical'})[card.config.center.rarity] end
+"""
+match_indent = true
