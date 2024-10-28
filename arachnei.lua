@@ -10,25 +10,9 @@
 ---------------------------------------------- 
 ------------MOD CODE ------------------------- 
 
----- Consumables
-local bezos = true
-local ganymede = true
-local humanity = true
+local config = SMODS.current_mod.config
 
----- Jokers
-local jokers = true
-local jonkler = true
-local sols = true
-
----- Other
-local coupon_book = true
-local hobby_shop = true
-
-local fortune = true
-
-local tag_reroll = true
-
-if bezos then
+if config.bezos then
   SMODS.Atlas {
     key = "bezos",
     path = "bezos spectral.png",
@@ -70,7 +54,7 @@ if bezos then
   }
 end
 
-if ganymede then
+if config.ganymede then
   SMODS.Atlas {
     key = "ganymede",
     path = "Ganymede.png",
@@ -133,7 +117,7 @@ if ganymede then
   }
 end
 
-if humanity then
+if config.humanity then
   SMODS.Atlas {
     key = "humanity",
     path = "humanity tarot.png",
@@ -219,7 +203,7 @@ if humanity then
   }
 end
 
-if jokers then
+if config.jokers then
   SMODS.Atlas {
     key = "jokers",
     path = "Jokers.png",
@@ -257,7 +241,7 @@ if jokers then
   }
 end
 
-if jonkler then
+if config.jonkler then
   SMODS.Atlas {
     key = "jonkler",
     path = "the jonkler.png",
@@ -295,7 +279,7 @@ if jonkler then
   }
 end
 
-if sols then
+if config.sols then
   SMODS.Atlas {
     key = "sols",
     path = "sols joker.png",
@@ -345,7 +329,7 @@ if sols then
   }
 end
 
-if coupon_book then
+if config.coupon_book then
   G.localization.misc.dictionary.k_coupon_book = "Coupon Book"
   SMODS.Atlas {
     key = "coupon_book",
@@ -378,7 +362,7 @@ if coupon_book then
 }
 end
 
-if hobby_shop then
+if config.hobby_shop then
   SMODS.Atlas {
     key = "hobby_shop",
     path = "card shop.png",
@@ -447,11 +431,11 @@ if hobby_shop then
   end
 end
 
-if fortune then
+if config.fortune then
   SMODS.load_file("/fortune.lua")()
 end
 
-if tag_reroll then
+if config.tag_reroll then
   function G.FUNCS.reroll_tags()
     G.GAME.round_resets.blind_tags.Small = get_next_tag_key()
     G.GAME.round_resets.blind_tags.Big = get_next_tag_key()
@@ -511,6 +495,39 @@ if tag_reroll then
     end
   end
 end
+
+local function create_config_node(config_name)
+  return
+  {n = G.UIT.R, config = {align = "cl", padding = 0}, nodes = {
+      {n = G.UIT.C, config = { align = "cl", padding = 0.05 }, nodes = {
+          create_toggle{ col = true, label = "", scale = 0.85, w = 0, shadow = true, ref_table = config, ref_value = config_name },
+      }},
+      {n = G.UIT.C, config = { align = "c", padding = 0 }, nodes = {
+          { n = G.UIT.T, config = { text = localize('arach_'..config_name), scale = 0.35, colour = G.C.UI.TEXT_LIGHT }},
+      }},
+  }}
+end
+
+SMODS.current_mod.config_tab = function()
+  return {n = G.UIT.ROOT, config = {r = 0.1, align = "c", padding = 0.1, colour = G.C.BLACK, minh = 6}, nodes = {
+      {n = G.UIT.C, config = {align = "t", padding = 0.1}, nodes = {
+          create_config_node("jokers"),
+          create_config_node("jonkler"),
+          create_config_node("sols"),
+          create_config_node("fortune"),
+          create_config_node("tag_reroll"),
+      }},
+
+      {n = G.UIT.C, config = {align = "t", padding = 0.1}, nodes = {
+          create_config_node("bezos"),
+          create_config_node("ganymede"),
+          create_config_node("humanity"),
+          create_config_node("coupon_book"),
+          create_config_node("hobby_shop"),
+      }},
+  }}
+end
+
 
 ----------------------------------------------
 ------------MOD CODE END---------------------
