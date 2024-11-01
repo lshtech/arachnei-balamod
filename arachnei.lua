@@ -143,7 +143,7 @@ if config.humanity then
     unlocked = true,
     discovered = false,
     can_use = function(self, card)
-      if G.STATE == G.STATES.SELECTING_HAND or G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK then
+      if G.STATE == G.STATES.SELECTING_HAND or G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK or G.STATE == G.STATES.PLANET_PACK or G.STATE == G.STATES.SMODS_BOOSTER_OPENED then
           if #G.hand.highlighted >= 1 and #G.hand.highlighted <= card.ability.max_highlighted then
               --this is supposed to make it so you cant use the card if you highlight a stone card, but
               --i literally do not know why it doesnt work. it literally returns false correctly, but
